@@ -1,0 +1,45 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+error.log
+access.log
+
+# Temporary / debug files
+test_post.php
+reset.php
+reset_pass.php
+generate_hash.php
+test.php
+*.test.php
+
+# Secrets (uncomment the line below if you customize config.php with real creds)
+# api/config.php
+
+# Database dumps (uncomment if sws_db.sql contains real user data)
+# sws_db.sql
+
+# Node (if you ever add)
+node_modules/
+package-lock.json
+
+# XAMPP
+xampp/
+htdocs/.htaccess.bak
+
+# Backups
+*.bak
+*.backup
+*.zip
+~$*

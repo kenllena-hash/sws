@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>SWS - Create Account</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background: linear-gradient(180deg, var(--sky) 0%, var(--foam) 50%, #ffffff 100%);
+            min-height: 100vh;
+        }
+        .auth-container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .auth-wrapper {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            background: #fff;
+            border-radius: var(--r-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        .auth-brand {
+            background: linear-gradient(160deg, var(--aqua) 0%, var(--cyan) 100%);
+            color: #fff;
+            padding: 48px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+        .auth-brand::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 80%, rgba(255,255,255,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(224,242,254,0.2) 0%, transparent 45%);
+            pointer-events: none;
+        }
+        .auth-brand > * { position: relative; z-index: 1; }
+        .auth-brand h1 { font-size: 42px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 12px; }
+        .auth-brand p  { font-size: 15px; color: rgba(255,255,255,0.9); margin-bottom: 4px; }
+        .auth-brand span { font-size: 12.5px; color: rgba(255,255,255,0.65); }
+        .brand-footer {
+            font-size: 12.5px;
+            color: rgba(255,255,255,0.7);
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 20px;
+            margin-top: 40px;
+            line-height: 1.65;
+        }
+        .form-panel { padding: 40px 36px; max-height: 92vh; overflow-y: auto; }
+        .form-panel h2 { font-size: 22px; font-weight: 700; color: var(--deep); margin-bottom: 6px; letter-spacing: -0.02em; }
+        .form-panel .subtitle { font-size: 14px; color: var(--ink-4); margin-bottom: 24px; line-height: 1.55; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .message { display: none; padding: 12px 14px; margin-bottom: 16px; border-radius: var(--r-sm); font-size: 13px; line-height: 1.5; font-weight: 500; }
+        .message.error   { display: block; background: var(--danger-soft); color: var(--danger); border: 1px solid #fecaca; }
+        .message.success { display: block; background: var(--success-soft); color: var(--success); border: 1px solid #a7f3d0; }
+        .show-password {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 32px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            color: var(--ink-4);
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .show-password:hover { background: var(--sky); color: var(--ocean); }
+        .switch-link, .back-link { text-align: center; font-size: 14px; color: var(--ink-4); margin-top: 16px; }
+        .switch-link a, .back-link a { color: var(--ocean); font-weight: 600; text-decoration: none; }
+        .switch-link a:hover, .back-link a:hover { text-decoration: underline; }
+        @media (max-width: 860px) {
+            .auth-wrapper { grid-template-columns: 1fr; max-width: 480px; }
+            .auth-brand { padding: 32px 28px; }
+            .auth-brand h1 { font-size: 32px; }
+            .brand-footer { display: none; }
+            .form-panel { padding: 32px 26px; max-height: none; }
+            .form-row { grid-template-columns: 1fr; gap: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="auth-container">
+    <div class="auth-wrapper">
+        <div class="auth-brand">
+            <div>
+                <h1>SWS</h1>
+                <p>Join Sharia Water Services</p>
+                <span>Buina, Fittoa</span>
+            </div>
+            <div class="brand-footer">
+                Create your account to submit complaints, track their progress, and stay informed about water service updates in your area.
+            </div>
+        </div>
+
+        <div class="form-panel">
+            <h2>Create your account</h2>
+            <p class="subtitle">Takes less than a minute. All fields are required.</p>
+
+            <div id="registerMessage" class="message" role="alert"></div>
+
+            <form id="registerForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First name</label>
+                        <input type="text" id="firstName" placeholder="Juan" autocomplete="given-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last name</label>
+                        <input type="text" id="lastName" placeholder="Dela Cruz" autocomplete="family-name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" id="email" placeholder="you@example.com" autocomplete="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone number</label>
+                    <input type="tel" id="phone" placeholder="09XXXXXXXXX" autocomplete="tel" inputmode="numeric" maxlength="11" required>
+                    <small class="field-hint">Format: 09XXXXXXXXX (11 digits)</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Home address</label>
+                    <input type="text" id="address" placeholder="Street, Barangay, Municipality" autocomplete="street-address" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-wrap">
+                        <input type="password" id="password" placeholder="At least 6 characters" autocomplete="new-password" minlength="6" required>
+                        <button type="button" class="show-password" onclick="togglePassword()">Show</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <label for="agreeTerms">I agree to the <a href="index.html" onclick="sessionStorage.setItem('openAgreement','1');">User Agreement and Terms of Use</a>.</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-blue btn-block" id="registerButton">Create account</button>
+            </form>
+
+            <p class="switch-link">
+                Already have an account?
+                <a href="login.html">Sign in</a>
+            </p>
+
+            <p class="back-link"><a href="index.html">Back to Home</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+const API = "api/";
+
+function showMessage(message, type) {
+    const box = document.getElementById("registerMessage");
+    box.textContent = message;
+    box.className = "message " + type;
+}
+
+function togglePassword() {
+    const password = document.getElementById("password");
+    const button = document.querySelector(".show-password");
+    if (password.type === "password") {
+        password.type = "text";
+        button.textContent = "Hide";
+    } else {
+        password.type = "password";
+        button.textContent = "Show";
+    }
+}
+
+document.getElementById("registerForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName  = document.getElementById("lastName").value.trim();
+    const email     = document.getElementById("email").value.trim();
+    const phone     = document.getElementById("phone").value.trim();
+    const address   = document.getElementById("address").value.trim();
+    const password  = document.getElementById("password").value;
+    const agreeTerms = document.getElementById("agreeTerms").checked;
+    const button    = document.getElementById("registerButton");
+
+    if (!firstName || !lastName || !email || !phone || !address || !password) {
+        showMessage("Please complete all fields.", "error"); return;
+    }
+    if (!/^09\d{9}$/.test(phone)) {
+        showMessage("Enter a valid 11-digit PH mobile number beginning with 09.", "error"); return;
+    }
+    if (password.length < 6) {
+        showMessage("Your password must contain at least 6 characters.", "error"); return;
+    }
+    if (!agreeTerms) {
+        showMessage("Please agree to the User Agreement and Terms of Use.", "error"); return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Creating account...";
+
+    try {
+        const response = await fetch(API + "register.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                full_name: firstName + " " + lastName,
+                email: email,
+                phone: phone,
+                address: address,
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || data.success === false) {
+            showMessage(data.message || "Registration failed. Please check your details.", "error");
+            return;
+        }
+
+        showMessage(data.message || "Account created. Redirecting to sign in...", "success");
+        document.getElementById("registerForm").reset();
+
+        setTimeout(() => { window.location.href = "login.html"; }, 1200);
+    } catch (error) {
+        showMessage("Unable to connect to the server. Please try again.", "error");
+    } finally {
+        button.disabled = false;
+        button.textContent = "Create account";
+    }
+});
+</script>
+
+</body>
+</html>

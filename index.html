@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="SWS — Water Outage Notification and Complaint System">
+    <meta name="theme-color" content="#0c2d48">
+    <title>SWS — Water Outage and Complaint System</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <h1>SWS</h1>
+        <p>Water Outage Notification and Complaint System</p>
+    </div>
+    <nav id="publicNav" aria-label="Public navigation">
+        <button onclick="showPage('home')">Home</button>
+        <button onclick="window.location.href='login.html'">Sign in</button>
+        <button onclick="window.location.href='register.html'">Create account</button>
+    </nav>
+    <nav id="privateNav" style="display:none;" aria-label="User navigation">
+        <span id="welcomeUser" class="welcome-user"></span>
+        <button onclick="showPage('dashboard')">Dashboard</button>
+        <button onclick="showPage('profile')">Profile</button>
+        <button onclick="confirmLogout()">Sign out</button>
+    </nav>
+</header>
+
+<section id="home" class="page active">
+    <div class="hero">
+        <div class="hero-content">
+            <h2>SWS</h2>
+            <h3>Water Outage Notification and Complaint System</h3>
+            <p>A web-based system for Buina residents to submit water-related complaints, monitor complaint status, and receive water outage announcements.</p>
+            <button class="btn btn-primary" onclick="window.location.href='register.html'">Get started</button>
+            <button class="btn btn-ghost" onclick="window.location.href='login.html'">I already have an account</button>
+        </div>
+    </div>
+
+    <div class="disclaimer">
+        <strong>System Notice</strong><br>
+        Sharia Water Services (SWS) — Buina, Fittoa. Submit water-related complaints, track their progress, and receive outage announcements.
+        <br><br>
+        <a href="#" onclick="showPage('agreement');return false;">Read User Agreement and Terms of Use →</a>
+    </div>
+
+    <div class="container">
+        <div class="title">
+            <h2>Everything you need</h2>
+            <p>Services available in the SWS system</p>
+        </div>
+        <div class="feature-grid">
+            <div class="feature"><h3>Complaint submission</h3><p>Report water-related issues directly through the website.</p></div>
+            <div class="feature"><h3>Outage notifications</h3><p>Stay informed about scheduled and emergency water outages.</p></div>
+            <div class="feature"><h3>Complaint tracking</h3><p>Check the current status and progress of your submitted complaints.</p></div>
+            <div class="feature"><h3>Reports</h3><p>SWS personnel can view complaint records and generate basic reports.</p></div>
+        </div>
+    </div>
+
+    <footer>
+        Sharia Water Services (SWS) · Buina, Fittoa
+        <br>
+        <a href="#" onclick="showPage('agreement');return false;">User Agreement and Terms of Use</a>
+    </footer>
+</section>
+
+<section id="agreement" class="page">
+    <div class="container">
+        <div class="title">
+            <h2>User Agreement and Terms of Use</h2>
+            <p>Please read carefully before using the SWS system.</p>
+        </div>
+        <div class="panel" style="line-height:1.75;font-size:14px;max-width:800px;margin:0 auto;">
+            <h3>1. Purpose</h3>
+            <p>This system allows residents of Buina, Fittoa to submit water-related complaints and receive outage notifications from Sharia Water Services (SWS).</p>
+            <h3 style="margin-top:20px;">2. User responsibilities</h3>
+            <ul style="margin-left:20px;">
+                <li>Provide accurate and truthful information when registering and submitting complaints.</li>
+                <li>Do not submit false, harmful, or abusive content.</li>
+                <li>Keep your login credentials secure.</li>
+                <li>Use the system only for legitimate water service concerns.</li>
+            </ul>
+            <h3 style="margin-top:20px;">3. Complaint handling</h3>
+            <p>SWS will review and respond to complaints within reasonable timeframes. Status updates will be reflected in your dashboard.</p>
+            <h3 style="margin-top:20px;">4. Data privacy</h3>
+            <p>Your personal information will be used only for processing complaints and sending outage notifications. We do not share your data with third parties without your consent.</p>
+            <h3 style="margin-top:20px;">5. Limitation of liability</h3>
+            <p>SWS is not liable for delays or issues caused by circumstances beyond its control.</p>
+            <h3 style="margin-top:20px;">6. Acceptance of terms</h3>
+            <p>By registering or using this system, you acknowledge that you have read, understood, and agreed to these terms.</p>
+            <br>
+            <button class="btn btn-blue" onclick="window.location.href='register.html'">Back to Register</button>
+            <button class="btn" style="background:var(--mist);color:var(--ink);border:1px solid var(--line);margin-left:10px;" onclick="showPage('home')">Back to Home</button>
+        </div>
+    </div>
+</section>
+
+<script src="js/script.js"></script>
+</body>
+</html>

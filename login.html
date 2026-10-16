@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>SWS - Sign in</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background: linear-gradient(180deg, var(--deep) 0%, var(--deep-2) 100%);
+            min-height: 100vh;
+        }
+        .auth-container {
+            max-width: 940px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .auth-wrapper {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: #fff;
+            border-radius: var(--r-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        .auth-brand {
+            background: linear-gradient(160deg, var(--deep) 0%, var(--ocean) 100%);
+            color: #fff;
+            padding: 48px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+        .auth-brand::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(34,211,238,0.25) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6,182,212,0.2) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .auth-brand > * { position: relative; z-index: 1; }
+        .auth-brand h1 { font-size: 42px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 12px; }
+        .auth-brand p  { font-size: 15px; color: rgba(255,255,255,0.85); margin-bottom: 4px; }
+        .auth-brand span { font-size: 12.5px; color: rgba(255,255,255,0.55); }
+        .brand-footer {
+            font-size: 12.5px;
+            color: rgba(255,255,255,0.55);
+            border-top: 1px solid rgba(255,255,255,0.12);
+            padding-top: 20px;
+            margin-top: 40px;
+            line-height: 1.65;
+        }
+        .form-panel { padding: 48px 40px; }
+        .form-panel h2 { font-size: 22px; font-weight: 700; color: var(--deep); margin-bottom: 6px; letter-spacing: -0.02em; }
+        .form-panel .subtitle { font-size: 14px; color: var(--ink-4); margin-bottom: 26px; line-height: 1.55; }
+        .message { display: none; padding: 12px 14px; margin-bottom: 16px; border-radius: var(--r-sm); font-size: 13px; line-height: 1.5; font-weight: 500; }
+        .message.error   { display: block; background: var(--danger-soft); color: var(--danger); border: 1px solid #fecaca; }
+        .message.success { display: block; background: var(--success-soft); color: var(--success); border: 1px solid #a7f3d0; }
+        .show-password {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 32px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            color: var(--ink-4);
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .show-password:hover { background: var(--sky); color: var(--ocean); }
+        .switch-link, .back-link { text-align: center; font-size: 14px; color: var(--ink-4); margin-top: 16px; }
+        .switch-link a, .back-link a { color: var(--ocean); font-weight: 600; text-decoration: none; }
+        .switch-link a:hover, .back-link a:hover { text-decoration: underline; }
+        @media (max-width: 860px) {
+            .auth-wrapper { grid-template-columns: 1fr; max-width: 480px; }
+            .auth-brand { padding: 32px 28px; }
+            .auth-brand h1 { font-size: 32px; }
+            .brand-footer { display: none; }
+            .form-panel { padding: 32px 26px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="auth-container">
+    <div class="auth-wrapper">
+        <div class="auth-brand">
+            <div>
+                <h1>SWS</h1>
+                <p>Sharia Water Services</p>
+                <span>Buina, Fittoa</span>
+            </div>
+            <div class="brand-footer">
+                Sign in to submit complaints, check their status, and view water outage announcements.
+            </div>
+        </div>
+
+        <div class="form-panel">
+            <h2>Sign in</h2>
+            <p class="subtitle">Welcome back. Enter your credentials to continue.</p>
+
+            <div id="loginMessage" class="message" role="alert"></div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email address</label>
+                    <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <div class="password-wrap">
+                        <input type="password" id="loginPassword" placeholder="Enter your password" autocomplete="current-password" required>
+                        <button type="button" class="show-password" onclick="togglePassword()">Show</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-blue btn-block" id="loginButton">Sign in</button>
+            </form>
+
+            <p class="switch-link">
+                Don't have an account?
+                <a href="register.html">Create an account</a>
+            </p>
+
+            <p class="back-link"><a href="index.html">Back to Home</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+const API = "api/";
+
+function showMessage(message, type) {
+    const box = document.getElementById("loginMessage");
+    box.textContent = message;
+    box.className = "message " + type;
+}
+
+function togglePassword() {
+    const password = document.getElementById("loginPassword");
+    const button = document.querySelector(".show-password");
+    if (password.type === "password") {
+        password.type = "text";
+        button.textContent = "Hide";
+    } else {
+        password.type = "password";
+        button.textContent = "Show";
+    }
+}
+
+document.getElementById("loginForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+    const button = document.getElementById("loginButton");
+
+    if (!email || !password) {
+        showMessage("Please enter your email and password.", "error");
+        return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Signing in...";
+
+    try {
+        const response = await fetch(API + "login.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: email, password: password })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || data.success === false || !data.user) {
+            showMessage(data.message || "Invalid email or password.", "error");
+            return;
+        }
+
+        sessionStorage.setItem("sws_user", JSON.stringify(data.user));
+        showMessage("Signing in…", "success");
+
+        const role = String(data.user.role || "resident").toLowerCase();
+
+        setTimeout(() => {
+            if (role === "superadmin") window.location.href = "superadmin.html";
+            else if (role === "admin") window.location.href = "admin.html";
+            else window.location.href = "resident.html";
+        }, 400);
+    } catch (error) {
+        showMessage("Unable to connect to the server. Please try again.", "error");
+    } finally {
+        button.disabled = false;
+        button.textContent = "Sign in";
+    }
+});
+</script>
+
+</body>
+</html>
